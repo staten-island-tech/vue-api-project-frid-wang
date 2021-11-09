@@ -1,17 +1,9 @@
 <template>
   <div class="main-container">
-    <main class="exchange">
-      <section class="currency-requested">
-        <input type="text" />
-        <input type="text" />
-      </section>
-      <section class="currency-returned">
-        <input type="text" />
-      </section>
-    </main>
-    <main class="reset">
+    <div class="exchange"></div>
+    <div class="reset">
       <button class="reset-button">Reset</button>
-    </main>
+    </div>
   </div>
 </template>
 
@@ -34,12 +26,6 @@ export default {};
   border-bottom-left-radius: 12.5vh;
   border-top-right-radius: 12.5vh;
   margin: 2.5vh;
-  display: flex;
-  flex-direction: row;
-}
-.currency-requested {
-  display: flex;
-  flex-direction: column;
 }
 .reset {
   width: 10vw;
