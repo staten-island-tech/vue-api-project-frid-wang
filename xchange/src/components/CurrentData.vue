@@ -2,11 +2,12 @@
   <div class="main-container">
     <main class="exchange">
       <section class="currency-requested">
-        <input type="text" />
-        <input type="text" />
+        <input type="text" placeholder="Enter currency type" class="header"/>
+        <input type="text" placeholder="Enter Amount" class="input"/>
       </section>
       <section class="currency-returned">
-        <input type="text" />
+        <input type="text" class="header" placeholder="Enter currency type" />
+        <div class="output"></div>
       </section>
     </main>
     <main class="reset">
@@ -54,5 +55,6 @@ export default {};
   margin: 2.5vh;
   border: none;
   font-size: 1.25rem;
+  cursor: pointer;
 }
 </style>
