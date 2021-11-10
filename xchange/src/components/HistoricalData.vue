@@ -1,6 +1,15 @@
 <template>
   <div class="main-container">
-    <div class="exchange"></div>
+    <div class="exchange">
+      <section class="request">
+        <form>
+          <input v-model="currency" type="text" />
+          <input v-model="amount" type="text" />
+          <input v-on:click="submitTest" type="submit" />
+        </form>
+      </section>
+      <section class="response"></section>
+    </div>
     <div class="reset">
       <button class="reset-button">Reset</button>
     </div>
@@ -8,7 +17,24 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      currency: null,
+      amount: null,
+    };
+  },
+  methods: {
+    submitTest() {
+      if (this.currency && this.amount) {
+        let test = {
+          currency: this.currency,
+          amount: this.amount,
+        };
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -19,7 +45,9 @@ export default {};
   flex-direction: column;
   align-items: center;
 }
+
 .exchange {
+  display: flex;
   width: 65vw;
   height: 50vh;
   box-shadow: 25px 20px 2.5rem #3f3f3f;
@@ -27,10 +55,12 @@ export default {};
   border-top-right-radius: 12.5vh;
   margin: 2.5vh;
 }
+
 .reset {
   width: 10vw;
   height: 5vh;
 }
+
 .reset-button {
   width: 10vw;
   height: 5vh;
@@ -40,5 +70,18 @@ export default {};
   margin: 2.5vh;
   border: none;
   font-size: 1.25rem;
+}
+
+.request {
+  height: 50vh;
+  width: 32.5vw;
+  background-color: aqua;
+  border-bottom-left-radius: 12.5vh;
+}
+.response {
+  height: 50vh;
+  width: 32.5vw;
+  background-color: red;
+  border-top-right-radius: 12.5vh;
 }
 </style>
