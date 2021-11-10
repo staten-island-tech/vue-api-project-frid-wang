@@ -3,7 +3,7 @@
     <main class="exchange">
       <section class="currency-requested">
         <input type="text" placeholder="Enter currency type" class="header"/>
-        <input type="text" placeholder="Enter Amount" class="input"/>
+        <input type="text" placeholder="Enter Amount" class="output"/>
       </section>
       <section class="currency-returned">
         <input type="text" class="header" placeholder="Enter currency type" />
@@ -12,7 +12,6 @@
     </main>
     <main class="reset">
       <button class="reset-button">Reset</button>
-      <button></button>
     </main>
   </div>
 </template>
@@ -47,7 +46,7 @@ export default {
   align-items: center;
 }
 .exchange {
-  width: 65vw;
+  width: 55vw;
   height: 50vh;
   box-shadow: 25px 20px 2.5rem #3f3f3f;
   border-bottom-left-radius: 12.5vh;
@@ -55,10 +54,20 @@ export default {
   margin: 2.5vh;
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
 }
 .currency-requested {
   display: flex;
   flex-direction: column;
+  height: 70%;
+  justify-content: space-around;
+}
+
+.currency-returned{
+    display: flex;
+  flex-direction: column;
+  height: 70%;
+  justify-content: space-around;
 }
 .reset {
   width: 10vw;
@@ -74,5 +83,18 @@ export default {
   border: none;
   font-size: 1.25rem;
   cursor: pointer;
+}
+
+.output{
+  height: 3rem;
+  border: solid ;
+}
+
+.output:focus{
+  outline: none;
+}
+
+.header:focus{
+  outline: none;
 }
 </style>
