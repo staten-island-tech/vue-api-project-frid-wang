@@ -12,12 +12,30 @@
     </main>
     <main class="reset">
       <button class="reset-button">Reset</button>
+      <button></button>
     </main>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  created () {
+    this.fetchData();
+  },
+  methods: {
+    fetchData: async function(){
+      try {
+        const response = await fetch(
+          "https://v6.exchangerate-api.com/v6/31a7b6235f39f82f83fd8af6/latest/USD"
+        )
+        const data = response.json()
+        console.log(data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  },
+};
 </script>
 
 <style scoped>
