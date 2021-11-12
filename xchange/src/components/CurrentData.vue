@@ -2,8 +2,13 @@
   <div class="main-container">
     <main class="exchange">
       <section class="currency-requested">
-        <input type="text" placeholder="Enter currency type" class="header"/>
-        <input type="text" placeholder="Enter Amount" class="output"/>
+        <!-- <input type="text" placeholder="Enter currency type" class="header"/> -->
+        <div class="currency-selector">
+          <ul>
+            <li v-for="rate in arr" :key="rate">{{ rate }}</li>
+          </ul>
+        </div>
+        <input type="text" placeholder="Enter Amount" class="output" />
       </section>
       <section class="currency-returned">
         <input type="text" class="header" placeholder="Enter currency type" />
@@ -18,21 +23,34 @@
 
 <script>
 export default {
-  created () {
+  data() {
+    return {
+      result: [],
+      arr: [],
+    };
+  },
+  created() {
     this.fetchData();
   },
   methods: {
-    fetchData: async function(){
+    fetchData: async function () {
       try {
         const response = await fetch(
           "https://v6.exchangerate-api.com/v6/31a7b6235f39f82f83fd8af6/latest/USD"
-        )
-        const data = response.json()
-        console.log(data)
+        );
+        const data = await response.json();
+        console.log(data);
+        console.log(data.conversion_rates);
+        this.result = data.conversion_rates;
+        console.log(this.result);
+        Object.keys(this.result).forEach((key) => {
+          this.arr.push({ [key]: this.result[key] });
+        });
+        console.log(this.arr);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
+    },
   },
 };
 </script>
@@ -63,8 +81,8 @@ export default {
   justify-content: space-around;
 }
 
-.currency-returned{
-    display: flex;
+.currency-returned {
+  display: flex;
   flex-direction: column;
   height: 70%;
   justify-content: space-around;
@@ -85,16 +103,16 @@ export default {
   cursor: pointer;
 }
 
-.output{
+.output {
   height: 3rem;
-  border: solid ;
+  border: solid;
 }
 
-.output:focus{
+.output:focus {
   outline: none;
 }
 
-.header:focus{
+.header:focus {
   outline: none;
 }
 </style>
