@@ -5,7 +5,7 @@
         <!-- <input type="text" placeholder="Enter currency type" class="header"/> -->
         <div class="currency-selector">
           <ul>
-            <li v-for="rate in arr" :key="rate">{{ rate }}</li>
+            <li v-for="name in names" :key="name">{{ name }}</li>
           </ul>
         </div>
         <input type="text" placeholder="Enter Amount" class="output" />
@@ -26,7 +26,8 @@ export default {
   data() {
     return {
       result: [],
-      arr: [],
+      names:[]
+    
     };
   },
   created() {
@@ -40,13 +41,13 @@ export default {
         );
         const data = await response.json();
         console.log(data);
-        console.log(data.conversion_rates);
-        this.result = data.conversion_rates;
+        this.result =  Object.values(data.conversion_rates) ;
         console.log(this.result);
-        Object.keys(this.result).forEach((key) => {
-          this.arr.push({ [key]: this.result[key] });
-        });
-        console.log(this.arr);
+        this.names = Object.keys(data.conversion_rates) 
+        console.log(this.names)
+        console.log(this.names[54])
+        console.log(this.result[54])
+ 
       } catch (error) {
         console.log(error);
       }
