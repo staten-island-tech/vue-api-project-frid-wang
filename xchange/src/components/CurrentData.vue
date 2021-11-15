@@ -26,8 +26,7 @@ export default {
   data() {
     return {
       result: [],
-      names:[]
-    
+      names: [],
     };
   },
   created() {
@@ -41,13 +40,12 @@ export default {
         );
         const data = await response.json();
         console.log(data);
-        this.result =  Object.values(data.conversion_rates) ;
+        this.result = Object.values(data.conversion_rates);
         console.log(this.result);
-        this.names = Object.keys(data.conversion_rates) 
-        console.log(this.names)
-        console.log(this.names[54])
-        console.log(this.result[54])
- 
+        this.names = Object.keys(data.conversion_rates);
+        console.log(this.names);
+        console.log(this.names[54]);
+        console.log(this.result[54]);
       } catch (error) {
         console.log(error);
       }

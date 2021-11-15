@@ -5,7 +5,7 @@
         <form>
           <input v-model="currency" type="text" />
           <input v-model="amount" type="text" />
-          <input v-on:click="submitTest" type="submit" />
+          <button v-on:click="submitTest" type="submit" />
         </form>
       </section>
       <section class="response"></section>
@@ -27,10 +27,14 @@ export default {
   methods: {
     submitTest() {
       if (this.currency && this.amount) {
-        let test = {
-          currency: this.currency,
-          amount: this.amount,
-        };
+        let currency2 = this.currency;
+        let amount2 = this.amount;
+        this.currency = null;
+        this.amount = null;
+        console.log(currency2);
+        console.log(amount2);
+      } else {
+        console.log("error");
       }
     },
   },
