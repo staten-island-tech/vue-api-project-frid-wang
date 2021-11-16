@@ -2,16 +2,21 @@
   <div class="main-container">
     <div class="exchange">
       <section class="request">
-        <form>
-          <input v-model="currency" type="text" />
-          <input v-model="amount" type="text" />
-          <button v-on:click="submitTest" type="submit" />
-        </form>
+        <input
+          class="currency-input"
+          v-model="currency"
+          type="text"
+          placeholder="Enter Currency"
+        />
+        <input
+          class="amount-input"
+          v-model="amount"
+          type="text"
+          placeholder="Enter Amount"
+        />
+        <button class="request-submit" v-on:click="submitTest">submit</button>
       </section>
       <section class="response"></section>
-    </div>
-    <div class="reset">
-      <button class="reset-button">Reset</button>
     </div>
   </div>
 </template>
@@ -26,16 +31,12 @@ export default {
   },
   methods: {
     submitTest() {
-      if (this.currency && this.amount) {
-        let currency2 = this.currency;
-        let amount2 = this.amount;
-        this.currency = null;
-        this.amount = null;
-        console.log(currency2);
-        console.log(amount2);
-      } else {
-        console.log("error");
-      }
+      let currency = this.currency;
+      let amount = this.amount;
+      console.log(currency);
+      console.log(amount);
+      this.currency = null;
+      this.amount = null;
     },
   },
 };
@@ -60,32 +61,37 @@ export default {
   margin: 2.5vh;
 }
 
-.reset {
-  width: 10vw;
-  height: 5vh;
-}
-
-.reset-button {
-  width: 10vw;
-  height: 5vh;
-  box-shadow: 2.5px 2px 0.25rem #3f3f3f;
-  border-top-left-radius: 2.5vh;
-  border-bottom-right-radius: 2.5vh;
-  margin: 2.5vh;
-  border: none;
-  font-size: 1.25rem;
-}
-
 .request {
   height: 50vh;
   width: 32.5vw;
-  background-color: aqua;
   border-bottom-left-radius: 12.5vh;
+  background-color: #cfcfcf;
+  border-right: 1.5px solid #3f3f3f;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 }
+
 .response {
   height: 50vh;
   width: 32.5vw;
-  background-color: red;
   border-top-right-radius: 12.5vh;
+  background-color: #cfcfcf;
+  border-left: 1.5px solid #3f3f3f;
+}
+
+.currency-input {
+  width: 15vw;
+  height: 1.5rem;
+  border-radius: 10px;
+  border: none;
+}
+
+.amount-input {
+  width: 15vw;
+  height: 1.5rem;
+  border-radius: 10px;
+  border: none;
 }
 </style>
