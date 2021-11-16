@@ -79,7 +79,10 @@ export default {
   height: 70%;
   justify-content: space-around;
 }
-
+ul {
+  list-style: none;
+  cursor: pointer;
+}
 .currency-returned {
   display: flex;
   flex-direction: column;
