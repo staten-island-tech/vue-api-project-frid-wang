@@ -2,13 +2,16 @@
   <div class="main-container">
     <main class="exchange">
       <section class="currency-requested">
-        <!-- <input type="text" placeholder="Enter currency type" class="header"/> -->
-        <div class="currency-selector">
+        <input type="text" placeholder="Enter currency type" class="header" v-model="currency"/>
+        <!-- <div class="currency-selector">
+          <h1 class="selector">Select Currency</h1>
           <ul>
-            <li v-for="name in names" :key="name">{{ name }}</li>
-          </ul>
-        </div>
-        <input type="text" placeholder="Enter Amount" class="output" />
+            <li class="name" v-for="name in names" :key="name">{{ name }}</li>
+         </ul>
+        </div> -->
+        
+        <input type="text" placeholder="Enter Amount" class="output" v-model="amount"/>
+        <button @click="onSubmit">Submit</button>
       </section>
       <section class="currency-returned">
         <input type="text" class="header" placeholder="Enter currency type" />
@@ -26,7 +29,9 @@ export default {
   data() {
     return {
       result: [],
-      names:[]
+      names:[],
+      currency:null,
+      amount:null
     
     };
   },
@@ -53,6 +58,11 @@ export default {
       }
     },
   },
+  onSubmit(){
+    let currency = this.currency;
+    let amount = this.amount;
+    console.log(currency, amount)
+  }
 };
 </script>
 
@@ -81,10 +91,27 @@ export default {
   height: 70%;
   justify-content: space-around;
 }
-ul {
+
+/* .currency-selector{
+  position: relative;
+}
+.selector{
+  cursor: pointer;
+} */
+
+
+/* ul {
   list-style: none;
   cursor: pointer;
-}
+  position: absolute;
+  top: 150vh;
+  max-width: 15rem; 
+  max-height: 15rem; 
+  overflow-y: scroll; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+} */
 .currency-returned {
   display: flex;
   flex-direction: column;
