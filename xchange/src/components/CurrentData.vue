@@ -2,16 +2,15 @@
   <div class="main-container">
     <main class="exchange">
       <section class="currency-requested">
-        <input type="text" placeholder="Enter currency type" class="header" v-model="currency"/>
-        <!-- <div class="currency-selector">
+
+        <div class="currency-selector">
           <h1 class="selector">Select Currency</h1>
           <ul>
-            <li class="name" v-for="name in names" :key="name">{{ name }}</li>
+            <li class="name" v-for="(name, index) in names" :key="name" @click="getIndex(index)">{{ name }}</li>
          </ul>
-        </div> -->
-        
-        <input type="text" placeholder="Enter Amount" class="output" v-model="amount"/>
-        <button @click="onSubmit">Submit</button>
+        </div>
+         <input type="text" class="header" placeholder="Enter Amount" v-model="amount"/>
+
       </section>
       <section class="currency-returned">
         <input type="text" class="header" placeholder="Enter currency type" />
@@ -30,8 +29,9 @@ export default {
     return {
       result: [],
       names:[],
-      currency:null,
-      amount:null
+      selectedName:0,
+      amount:null,
+      output:null
     
     };
   },
@@ -50,20 +50,24 @@ export default {
         console.log(this.result);
         this.names = Object.keys(data.conversion_rates) 
         console.log(this.names)
-        console.log(this.names[54])
-        console.log(this.result[54])
  
       } catch (error) {
         console.log(error);
       }
     },
+    getIndex(index){
+      this.selectedName = index
+      console.log(index)
+    },
+    // getAmount(){
+    //   if(this.amount){
+    //    let amount = this.amount
+    //    console.log(amount)
+    // };
+
   },
-  onSubmit(){
-    let currency = this.currency;
-    let amount = this.amount;
-    console.log(currency, amount)
-  }
-};
+  
+}
 </script>
 
 <style scoped>
@@ -92,26 +96,25 @@ export default {
   justify-content: space-around;
 }
 
-/* .currency-selector{
+ .currency-selector{
   position: relative;
+
 }
 .selector{
   cursor: pointer;
-} */
+} 
 
 
-/* ul {
+ ul {
   list-style: none;
   cursor: pointer;
   position: absolute;
-  top: 150vh;
-  max-width: 15rem; 
-  max-height: 15rem; 
-  overflow-y: scroll; 
+  max-height: 24rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-} */
+
+
+} 
 .currency-returned {
   display: flex;
   flex-direction: column;
