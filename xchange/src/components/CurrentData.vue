@@ -2,13 +2,15 @@
   <div class="main-container">
     <main class="exchange">
       <section class="currency-requested">
-        <!-- <input type="text" placeholder="Enter currency type" class="header"/> -->
+
         <div class="currency-selector">
+          <h1 class="selector">Select Currency</h1>
           <ul>
-            <li v-for="name in names" :key="name">{{ name }}</li>
-          </ul>
+            <li class="name" v-for="(name, index) in names" :key="name" @click="getIndex(index)">{{ name }}</li>
+         </ul>
         </div>
-        <input type="text" placeholder="Enter Amount" class="output" />
+         <input type="text" class="header" placeholder="Enter Amount" v-model="amount" @keyup="getAmount"/>
+
       </section>
       <section class="currency-returned">
         <input type="text" class="header" placeholder="Enter currency type" />
@@ -26,7 +28,11 @@ export default {
   data() {
     return {
       result: [],
-      names: [],
+      names:[],
+      selectedName:0,
+      amount:null,
+      output:null
+    
     };
   },
   created() {
@@ -42,16 +48,32 @@ export default {
         console.log(data);
         this.result = Object.values(data.conversion_rates);
         console.log(this.result);
-        this.names = Object.keys(data.conversion_rates);
-        console.log(this.names);
-        console.log(this.names[54]);
-        console.log(this.result[54]);
+        this.names = Object.keys(data.conversion_rates) 
+        console.log(this.names)
+ 
       } catch (error) {
         console.log(error);
       }
     },
+    getIndex(index){
+      this.selectedName = index
+      console.log(index)
+    },
+    // getAmount(){
+    //   if(this.amount){
+    //    let amount = this.amount
+    //    console.log(amount)
+    // };
+    getAmount(){
+      let amount = this.amount
+      console.log(amount)
+      
+    }
+ 
+
   },
-};
+  
+}
 </script>
 
 <style scoped>
@@ -79,10 +101,26 @@ export default {
   height: 70%;
   justify-content: space-around;
 }
-ul {
+
+ .currency-selector{
+  position: relative;
+
+}
+.selector{
+  cursor: pointer;
+} 
+
+
+ ul {
   list-style: none;
   cursor: pointer;
-}
+  position: absolute;
+  max-height: 24rem;
+  display: flex;
+  flex-direction: column;
+
+
+} 
 .currency-returned {
   display: flex;
   flex-direction: column;
