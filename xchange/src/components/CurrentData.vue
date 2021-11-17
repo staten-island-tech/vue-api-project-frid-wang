@@ -9,7 +9,7 @@
             <li class="name" v-for="(name, index) in names" :key="name" @click="getIndex(index)">{{ name }}</li>
          </ul>
         </div>
-         <input type="text" class="header" placeholder="Enter Amount" v-model="amount"/>
+         <input type="text" class="header" placeholder="Enter Amount" v-model="amount" @keyup="getAmount"/>
 
       </section>
       <section class="currency-returned">
@@ -64,6 +64,12 @@ export default {
     //    let amount = this.amount
     //    console.log(amount)
     // };
+    getAmount(){
+      let amount = this.amount
+      console.log(amount)
+      
+    }
+ 
 
   },
   
