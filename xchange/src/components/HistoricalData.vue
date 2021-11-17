@@ -14,31 +14,60 @@
           type="text"
           placeholder="Enter Amount"
         />
-        <button class="request-submit" v-on:click="submitTest">submit</button>
+        <datepicker class="date-input" placeholder="Select a date" />
+        <button class="request-submit" v-on:click="fetchHistoricalData">
+          submit
+        </button>
       </section>
-      <section class="response"></section>
+      <section class="response">
+        <ul>
+          <li
+            class="response-info"
+            v-for="conversion_amount in converstion_amounts"
+            :key="conversion_amount"
+          >
+            {{ conversion_amount }}
+          </li>
+        </ul>
+      </section>
     </div>
   </div>
 </template>
 
 <script>
+import datepicker from "vuejs-datepicker";
 export default {
+  components: {
+    datepicker,
+  },
   data() {
     return {
       currency: null,
       amount: null,
+      conversion_amounts: null,
     };
   },
   methods: {
-    submitTest() {
-      let currency = this.currency;
-      let amount = this.amount;
-      console.log(currency);
-      console.log(amount);
-      this.currency = null;
-      this.amount = null;
+    fetchHistoricalData: async function () {
+      try {
+        const response = await fetch(
+          "https://v6.exchangerate-api.com/v6/31a7b6235f39f82f83fd8af6/history/" +
+            this.currency +
+            "/2015/2/22/" +
+            this.amount
+        );
+        const data = await response.json();
+        this.conversion_amounts = data.conversion_amounts;
+        this.currency = null;
+        this.amount = null;
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
+  /*   created() {
+    this.fetchHistoricalData();
+  }, */
 };
 </script>
 
@@ -89,6 +118,13 @@ export default {
 }
 
 .amount-input {
+  width: 15vw;
+  height: 1.5rem;
+  border-radius: 10px;
+  border: none;
+}
+
+.date-input {
   width: 15vw;
   height: 1.5rem;
   border-radius: 10px;
