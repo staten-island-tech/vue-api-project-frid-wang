@@ -15,6 +15,7 @@
           placeholder="Enter Amount"
         />
         <datepicker
+          :disabled-dates="disabledDates"
           :format="customFormatter"
           v-model="date"
           placeholder="Select a date"
@@ -34,6 +35,13 @@
         </ul>
       </section>
     </div>
+    <div class="ISO-list">
+      <ul>
+        <li v-for="iso in isos" :key="iso">
+          {{ iso }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -51,6 +59,47 @@ export default {
       amount: null,
       date: null,
       conversion_amounts: [],
+      disabledDates: {
+        to: new Date(2000, 0, 1), // Disable all dates up to specific date
+        from: new Date(2020, 12, 31),
+      },
+      isos: [
+        "AUD",
+        "ATS",
+        "BEF",
+        "BRL",
+        "CAD",
+        "CHF",
+        "CNY",
+        "DEM",
+        "DKK",
+        "ESP",
+        "EUR",
+        "FIM",
+        "FRF",
+        "GBP",
+        "GRD",
+        "HKD",
+        "IEP",
+        "INR",
+        "IRR",
+        "ITL",
+        "JPY",
+        "KRW",
+        "LKR",
+        "MXN",
+        "MYR",
+        "NGK",
+        "NLG",
+        "NZD",
+        "PTE",
+        "SEK",
+        "SGD",
+        "THB",
+        "TWD",
+        "USD",
+        "ZAR",
+      ],
     };
   },
   methods: {
@@ -70,12 +119,13 @@ export default {
         let totals = Object.values(data.conversion_amounts);
         let display = names;
         let i = 0;
-        let m = 23;
-        while (i < 23) {
+        let m = 35;
+        while (i < 35) {
           display.splice(m, 0, totals[i]);
           m++;
           i++;
         }
+        display.length = 70;
         this.conversion_amounts = display;
         this.currency = null;
         this.amount = null;
@@ -103,7 +153,7 @@ export default {
 .exchange {
   display: flex;
   width: 65vw;
-  height: 50vh;
+  height: 40vh;
   box-shadow: 25px 20px 2.5rem #3f3f3f;
   border-bottom-left-radius: 12.5vh;
   border-top-right-radius: 12.5vh;
@@ -111,7 +161,7 @@ export default {
 }
 
 .request {
-  height: 50vh;
+  height: 40vh;
   width: 32.5vw;
   border-bottom-left-radius: 12.5vh;
   background-color: #cfcfcf;
@@ -123,7 +173,7 @@ export default {
 }
 
 .response {
-  height: 50vh;
+  height: 40vh;
   width: 32.5vw;
   border-top-right-radius: 12.5vh;
   background-color: #cfcfcf;
@@ -147,6 +197,11 @@ export default {
 .response-info {
   columns: 2;
   list-style: none;
-  font-size: 0.75rem;
+  font-size: 0.5rem;
+}
+
+.ISO-list {
+  columns: 6;
+  list-style: none;
 }
 </style>
