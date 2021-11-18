@@ -9,12 +9,17 @@
             <li class="name" v-for="(name, index) in names" :key="name" @click="getIndex(index)">{{ name }}</li>
          </ul>
         </div>
-         <input type="text" class="header" placeholder="Enter Amount" v-model="amount" @keyup="getAmount"/>
+         <input type="text" class="header" placeholder="Enter Amount" v-model="amount" @keyup="calcOutput" />
 
       </section>
       <section class="currency-returned">
-        <input type="text" class="header" placeholder="Enter currency type" />
-        <div class="output"></div>
+           <div class="currency-selector">
+          <h1 class="selector">Select Currency</h1>
+          <ul>
+            <li class="name" v-for="(name, index2) in names" :key="name" @click="getIndex2(index2)">{{ name }}</li>
+         </ul>
+        </div>
+    <input type="text" class="header" placeholder="" v-model="output"/>
       </section>
     </main>
     <main class="reset">
@@ -30,6 +35,7 @@ export default {
       result: [],
       names:[],
       selectedName:0,
+      selectedName2:0,
       amount:null,
       output:null
     
@@ -50,6 +56,7 @@ export default {
         console.log(this.result);
         this.names = Object.keys(data.conversion_rates) 
         console.log(this.names)
+        console.log(this.result[8])
  
       } catch (error) {
         console.log(error);
@@ -57,21 +64,28 @@ export default {
     },
     getIndex(index){
       this.selectedName = index
-      console.log(index)
     },
-    // getAmount(){
-    //   if(this.amount){
-    //    let amount = this.amount
-    //    console.log(amount)
-    // };
+    getIndex2(index2){
+      this.selectedName2 = index2
+      console.log(index2)
+      console.log(this.result[this.selectedName])
+    },
     getAmount(){
-      let amount = this.amount
-      console.log(amount)
-      
-    }
- 
-
+       let amount = this.amount
+       console.log(this.result[this.selectedName])
+       console.log(amount)
   },
+  calcOutput(){
+      this.output = (this.amount/this.result[this.selectedName])*this.result[this.selectedName2]
+      console.log(this.output)
+    }
+  },
+  // computed: {
+  //   calcOutput(){
+  //     this.output = (this.amount * this.result[this.selectedName])/this.result[this.selectedName2]
+  //     console.log(this.output)
+  //   }
+  // }
   
 }
 </script>
