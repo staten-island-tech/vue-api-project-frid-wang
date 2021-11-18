@@ -59,7 +59,9 @@ export default {
         const response = await fetch(
           "https://v6.exchangerate-api.com/v6/31a7b6235f39f82f83fd8af6/history/" +
             this.currency +
-            "/2015/2/22/" +
+            "/" +
+            moment(this.date).format("YYYY/MM/DD") +
+            "/" +
             this.amount
         );
         const data = await response.json();
@@ -77,19 +79,15 @@ export default {
         this.conversion_amounts = display;
         this.currency = null;
         this.amount = null;
-        console.log(this.date);
         this.date = null;
       } catch (error) {
         console.log(error);
       }
     },
     customFormatter(day) {
-      return moment(day).format("YYYY/MM/DD");
+      return moment(day).format("ddd, MMM Do YYYY");
     },
   },
-  /*   created() {
-    this.fetchHistoricalData();
-  }, */
 };
 </script>
 
