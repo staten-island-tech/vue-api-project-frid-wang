@@ -14,16 +14,19 @@
           type="text"
           placeholder="Enter Amount"
         />
-        <datepicker class="date-input" placeholder="Select a date" />
+        <datepicker
+          :format="customFormatter"
+          v-model="date"
+          placeholder="Select a date"
+        />
         <button class="request-submit" v-on:click="fetchHistoricalData">
           submit
         </button>
       </section>
       <section class="response">
-        <ul>
+        <ul class="response-info">
           <li
-            class="response-info"
-            v-for="conversion_amount in converstion_amounts"
+            v-for="conversion_amount in conversion_amounts"
             :key="conversion_amount"
           >
             {{ conversion_amount }}
@@ -36,6 +39,8 @@
 
 <script>
 import datepicker from "vuejs-datepicker";
+var moment = require("moment");
+
 export default {
   components: {
     datepicker,
@@ -44,7 +49,8 @@ export default {
     return {
       currency: null,
       amount: null,
-      conversion_amounts: null,
+      date: null,
+      conversion_amounts: [],
     };
   },
   methods: {
@@ -57,12 +63,28 @@ export default {
             this.amount
         );
         const data = await response.json();
-        this.conversion_amounts = data.conversion_amounts;
+        console.log(data);
+        let names = Object.keys(data.conversion_amounts);
+        let totals = Object.values(data.conversion_amounts);
+        let display = names;
+        let i = 0;
+        let m = 23;
+        while (i < 23) {
+          display.splice(m, 0, totals[i]);
+          m++;
+          i++;
+        }
+        this.conversion_amounts = display;
         this.currency = null;
         this.amount = null;
+        console.log(this.date);
+        this.date = null;
       } catch (error) {
         console.log(error);
       }
+    },
+    customFormatter(day) {
+      return moment(day).format("YYYY/MM/DD");
     },
   },
   /*   created() {
@@ -124,10 +146,9 @@ export default {
   border: none;
 }
 
-.date-input {
-  width: 15vw;
-  height: 1.5rem;
-  border-radius: 10px;
-  border: none;
+.response-info {
+  columns: 2;
+  list-style: none;
+  font-size: 0.75rem;
 }
 </style>
