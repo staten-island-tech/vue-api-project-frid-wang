@@ -1,5 +1,11 @@
 <template>
   <div class="main-container">
+    <div class="date-warn">
+      <p>
+        Historical Data applies to dates ranging from Jan. 1st, 2000 to Dec.
+        31st, 2016
+      </p>
+    </div>
     <div class="exchange">
       <section class="request">
         <input
@@ -35,8 +41,9 @@
         </ul>
       </section>
     </div>
-    <div class="ISO-list">
-      <ul>
+    <div class="iso-container">
+      <p class="iso-title">Possible Currency Codes</p>
+      <ul class="ISO-list">
         <li v-for="iso in isos" :key="iso">
           {{ iso }}
         </li>
@@ -61,7 +68,7 @@ export default {
       conversion_amounts: [],
       disabledDates: {
         to: new Date(2000, 0, 1), // Disable all dates up to specific date
-        from: new Date(2020, 12, 31),
+        from: new Date(2016, 12, 31),
       },
       isos: [
         "AUD",
@@ -142,12 +149,16 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Unica+One&display=swap");
+
 .main-container {
   width: 100vw;
   height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: Unica;
+  font: 600;
 }
 
 .exchange {
@@ -178,6 +189,8 @@ export default {
   border-top-right-radius: 12.5vh;
   background-color: #cfcfcf;
   border-left: 1.5px solid #3f3f3f;
+  max-height: 40vh;
+  overflow-y: scroll;
 }
 
 .currency-input {
@@ -197,11 +210,35 @@ export default {
 .response-info {
   columns: 2;
   list-style: none;
-  font-size: 0.5rem;
+  font-size: 1rem;
+  line-height: 150%;
 }
 
 .ISO-list {
   columns: 6;
   list-style: none;
+}
+
+.iso-title {
+  font-size: 1.25rem;
+}
+
+.iso-container {
+  width: 25vw;
+  margin: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+.date-warn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  width: 40vw;
+  height: 5vh;
+  background-color: #d45434;
+  filter: brightness(110%);
 }
 </style>
