@@ -19,7 +19,7 @@
             <li class="name" v-for="(name, index2) in names" :key="name" @click="getIndex2(index2)">{{ name }}</li>
          </ul>
         </div>
-    <input type="text" class="header" placeholder="" @keyup="calcInput" v-model="output"/>
+    <input type="text" class="header" placeholder="Enter Amount" @keyup="calcInput" v-model="output"/>
       </section>
     </main>
     <main class="reset">
@@ -120,6 +120,7 @@ export default {
 
  .currency-selector{
   position: relative;
+  height: 50%;
 
 }
 .selector{
@@ -131,12 +132,21 @@ export default {
   list-style: none;
   cursor: pointer;
   position: absolute;
-  max-height: 24rem;
+  max-height: 9rem;
+  width: 15rem;
   display: flex;
   flex-direction: column;
-
+  overflow-y: scroll;
+  transform: translateX(-20%);
+  text-align: left;
+  border: 1px black solid;
+  display: none;
 
 } 
+
+li:hover{
+  background-color: rgb(189, 189, 189);
+}
 .currency-returned {
   display: flex;
   flex-direction: column;
@@ -166,6 +176,11 @@ export default {
 
 .output:focus {
   outline: none;
+}
+
+.active{
+  display: flex;
+  
 }
 
 .header:focus {
