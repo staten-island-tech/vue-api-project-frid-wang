@@ -19,11 +19,11 @@
             <li class="name" v-for="(name, index2) in names" :key="name" @click="getIndex2(index2)">{{ name }}</li>
          </ul>
         </div>
-    <input type="text" class="header" placeholder="" v-model="output"/>
+    <input type="text" class="header" placeholder="" @keyup="calcInput" v-model="output"/>
       </section>
     </main>
     <main class="reset">
-      <button class="reset-button">Reset</button>
+      <button class="reset-button" @click="reset">Reset</button>
     </main>
   </div>
 </template>
@@ -78,14 +78,16 @@ export default {
   calcOutput(){
       this.output = (this.amount/this.result[this.selectedName])*this.result[this.selectedName2]
       console.log(this.output)
+    },
+    calcInput(){
+      this.amount = (this.output/this.result[this.selectedName2])*this.result[this.selectedName]
+    },
+    reset(){
+    this.amount = null
+    this.output = null
     }
   },
-  // computed: {
-  //   calcOutput(){
-  //     this.output = (this.amount * this.result[this.selectedName])/this.result[this.selectedName2]
-  //     console.log(this.output)
-  //   }
-  // }
+
   
 }
 </script>
