@@ -4,20 +4,24 @@
       <section class="currency-requested">
 
         <div class="currency-selector">
-          <h1 class="selector">Select Currency</h1>
-          <ul>
-            <li class="name" v-for="(name, index) in names" :key="name" @click="getIndex(index)">{{ name }}</li>
-         </ul>
+          <div class="selection-box">
+           <div class="ul">
+             <li class="name" v-for="(name, index) in names" :key="name" @click="getIndex(index)" >{{ name }}</li>
+          </div>
+           <h1 class="selector"  @click="active">Select Currency</h1>
+         </div>
         </div>
          <input type="text" class="header" placeholder="Enter Amount" v-model="amount" @keyup="calcOutput" />
 
       </section>
       <section class="currency-returned">
            <div class="currency-selector">
-          <h1 class="selector">Select Currency</h1>
-          <ul>
+          <div class="selection-box2">
+            <div class="ul2">
             <li class="name" v-for="(name, index2) in names" :key="name" @click="getIndex2(index2)">{{ name }}</li>
-         </ul>
+           </div>
+            <h1 class="selector2" @click="active2">Select Currency</h1>
+         </div>
         </div>
     <input type="text" class="header" placeholder="Enter Amount" @keyup="calcInput" v-model="output"/>
       </section>
@@ -62,12 +66,16 @@ export default {
         console.log(error);
       }
     },
-    getIndex(index){
+    getIndex(index, e){
       this.selectedName = index
+      const selector = document.querySelector(".selector")
+      const allNames = document.querySelectorAll(".name")
+       selector.innerHTML = e.innerHTML 
+      allNames.classList.remove("active")
     },
     getIndex2(index2){
       this.selectedName2 = index2
-      console.log(index2)
+      console.log(index2, this.selectedName)
       console.log(this.result[this.selectedName])
     },
     getAmount(){
@@ -85,7 +93,22 @@ export default {
     reset(){
     this.amount = null
     this.output = null
+    },
+    active(){
+      const ul = document.querySelector(".ul")
+      ul.classList.toggle("active")
+    },
+      active2(){
+      const ul2 = document.querySelector(".ul2")
+      ul2.classList.toggle("active")
+    },
+    rename(e){
+      const selector = document.querySelector(".selector")
+      const allNames = document.querySelectorAll(".name")
+      selector.innerHTML = e.innerHTML 
+      allNames.classList.remove("active")
     }
+  
   },
 
   
@@ -125,10 +148,121 @@ export default {
 }
 .selector{
   cursor: pointer;
+  background: #2f3640;
+  border-radius: 0.8rem;
+  margin-bottom: 0.8rem;
+  color: white;
+  position: relative;
+
+  order: 0;
 } 
 
+.selector2{
+  cursor: pointer;
+  background: #2f3640;
+  border-radius: 0.8rem;
+  margin-bottom: 0.8rem;
+  color: white;
+  position: relative;
 
- ul {
+  order: 0;
+} 
+.selection-box{
+  display: flex;
+  width: 20rem;
+  flex-direction: column;
+}
+.selection-box2{
+  display: flex;
+  width: 20rem;
+  flex-direction: column;
+}
+
+.selection-box .ul {
+  display: flex;
+  flex-direction: column;
+  background: #2f3640;
+  color: white;
+  max-height: 0;
+  width: 100%;
+  opacity: 0;
+  transition: all 0.4s;
+  border-radius: 8px;
+  overflow: hidden;
+  list-style: none;
+
+  order: 1;
+}
+
+.selection-box2 .ul2 {
+  display: flex;
+  flex-direction: column;
+  background: #2f3640;
+  color: white;
+  max-height: 0;
+  width: 100%;
+  opacity: 0;
+  transition: all 0.4s;
+  border-radius: 8px;
+  overflow: hidden;
+  list-style: none;
+
+  order: 1;
+}
+.selection-box .ul.active{
+  max-height: 10rem;
+  overflow-y: scroll;
+  opacity: 1;
+}
+
+.selection-box2 .ul2.active{
+  max-height: 10rem;
+  overflow-y: scroll;
+  opacity: 1;
+}
+
+.selection-box .ul::-webkit-scrollbar{
+  width: 0.8rem;
+  background: #0d141f;
+  border-radius: 0 0.8rem 0.8rem 0;
+}
+
+.selection-box2 .ul2::-webkit-scrollbar{
+  width: 0.8rem;
+  background: #0d141f;
+  border-radius: 0 0.8rem 0.8rem 0;
+}
+
+.selection-box .ul::-webkit-scrollbar-thumb{
+  background: #525861;
+  border-radius: 0 0.8rem 0.8rem 0;
+}
+
+.selection-box2 .ul2::-webkit-scrollbar-thumb{
+  background: #525861;
+  border-radius: 0 0.8rem 0.8rem 0;
+}
+.selection-box .name,
+.selector {
+  padding: 0.6rem 1.4rem;
+  cursor: pointer;
+}
+
+.selection-box2 .name,
+.selector2 {
+  padding: 0.6rem 1.4rem;
+  cursor: pointer;
+}
+
+
+.selection-box .name:hover{
+  background: #414b57;
+}
+
+.selection-box2 .name:hover{
+  background: #414b57;
+}
+ /* ul {
   list-style: none;
   cursor: pointer;
   position: absolute;
@@ -140,13 +274,13 @@ export default {
   transform: translateX(-20%);
   text-align: left;
   border: 1px black solid;
-  display: none;
+   display: none; 
 
-} 
+}  */
 
-li:hover{
+/* li:hover{
   background-color: rgb(189, 189, 189);
-}
+} */
 .currency-returned {
   display: flex;
   flex-direction: column;
