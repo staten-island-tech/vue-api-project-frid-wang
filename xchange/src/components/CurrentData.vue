@@ -25,7 +25,10 @@
         </div>
     <input type="text" class="header" placeholder="Enter Amount" @keyup="calcInput" v-model="output"/>
       </section>
+
+      
     </main>
+    <h1>All Outputs are rounded to 3 decimals!</h1>
     <main class="reset">
       <button class="reset-button" @click="reset">Reset</button>
     </main>
@@ -84,11 +87,11 @@ export default {
        console.log(amount)
   },
   calcOutput(){
-      this.output = (this.amount/this.result[this.selectedName])*this.result[this.selectedName2]
+      this.output = ((this.amount/this.result[this.selectedName])*this.result[this.selectedName2]).toFixed(3)
       console.log(this.output)
     },
     calcInput(){
-      this.amount = (this.output/this.result[this.selectedName2])*this.result[this.selectedName]
+      this.amount = ((this.output/this.result[this.selectedName2])*this.result[this.selectedName]).toFixed(3)
     },
     reset(){
     this.amount = null
@@ -312,10 +315,7 @@ export default {
   outline: none;
 }
 
-.active{
-  display: flex;
-  
-}
+
 
 .header:focus {
   outline: none;
