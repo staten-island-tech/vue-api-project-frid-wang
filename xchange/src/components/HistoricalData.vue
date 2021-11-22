@@ -1,13 +1,10 @@
 <template>
   <div class="main-container">
     <div class="date-warn">
-      <p>
-        Historical Data applies to dates ranging from Jan. 1st, 2000 to Dec.
-        31st, 2016
-      </p>
+      <p>{{ $attrs.warning }}</p>
     </div>
     <div class="exchange">
-      <section class="request">
+      <section class="request" v-bind:style="requestStyle">
         <input
           class="currency-input"
           v-model="currency"
@@ -27,10 +24,10 @@
           placeholder="Select a date"
         />
         <button class="request-submit" v-on:click="fetchHistoricalData">
-          submit
+          SUBMIT
         </button>
       </section>
-      <section class="response">
+      <section class="response" v-bind:style="responseStyle">
         <ul class="response-info">
           <li
             v-for="conversion_amount in conversion_amounts"
@@ -40,14 +37,6 @@
           </li>
         </ul>
       </section>
-    </div>
-    <div class="iso-container">
-      <p class="iso-title">Possible Currency Codes</p>
-      <ul class="ISO-list">
-        <li v-for="iso in isos" :key="iso">
-          {{ iso }}
-        </li>
-      </ul>
     </div>
   </div>
 </template>
@@ -68,45 +57,20 @@ export default {
       conversion_amounts: [],
       disabledDates: {
         to: new Date(2000, 0, 1), // Disable all dates up to specific date
-        from: new Date(2016, 12, 31),
+        from: new Date(2021, 10, 31),
       },
-      isos: [
-        "AUD",
-        "ATS",
-        "BEF",
-        "BRL",
-        "CAD",
-        "CHF",
-        "CNY",
-        "DEM",
-        "DKK",
-        "ESP",
-        "EUR",
-        "FIM",
-        "FRF",
-        "GBP",
-        "GRD",
-        "HKD",
-        "IEP",
-        "INR",
-        "IRR",
-        "ITL",
-        "JPY",
-        "KRW",
-        "LKR",
-        "MXN",
-        "MYR",
-        "NGK",
-        "NLG",
-        "NZD",
-        "PTE",
-        "SEK",
-        "SGD",
-        "THB",
-        "TWD",
-        "USD",
-        "ZAR",
-      ],
+      responseStyle: {},
+      requestStyle: {},
+      scrollStyleRes: {
+        maxHeight: "50vh",
+        overflowY: "scroll",
+        borderTopRightRadius: "0vh",
+        borderBottomRightRadius: "0vh",
+      },
+      scrollStyleReq: {
+        borderBottomLeftRadius: "0vh",
+        borderTopLeftRadius: "0vh",
+      },
     };
   },
   methods: {
@@ -124,21 +88,23 @@ export default {
         console.log(data);
         let names = Object.keys(data.conversion_amounts);
         let totals = Object.values(data.conversion_amounts);
-        let display = names;
+        let display = [];
         let i = 0;
-        let m = 35;
-        while (i < 35) {
-          display.splice(m, 0, totals[i]);
-          m++;
+
+        while (i < names.length) {
+          display.push(String(names[i]) + " " + String(totals[i]));
           i++;
         }
-        display.length = 70;
         this.conversion_amounts = display;
+        this.responseStyle = this.scrollStyleRes;
+        this.requestStyle = this.scrollStyleReq;
         this.currency = null;
         this.amount = null;
         this.date = null;
       } catch (error) {
-        console.log(error);
+        alert(
+          "There was a problem fulfilling your request, please confirm that all inputs were spelled correctly, and that no fields were left blank. Thank you, and sorry for any inconvenience"
+        );
       }
     },
     customFormatter(day) {
@@ -150,6 +116,7 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Unica+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap");
 
 .main-container {
   width: 100vw;
@@ -164,17 +131,17 @@ export default {
 .exchange {
   display: flex;
   width: 65vw;
-  height: 40vh;
+  height: 50vh;
   box-shadow: 25px 20px 2.5rem #3f3f3f;
-  border-bottom-left-radius: 12.5vh;
-  border-top-right-radius: 12.5vh;
+  border-radius: 5vh;
   margin: 2.5vh;
 }
 
 .request {
-  height: 40vh;
+  height: 50vh;
   width: 32.5vw;
-  border-bottom-left-radius: 12.5vh;
+  border-bottom-left-radius: 5vh;
+  border-top-left-radius: 5vh;
   background-color: #cfcfcf;
   border-right: 1.5px solid #3f3f3f;
   display: flex;
@@ -184,13 +151,12 @@ export default {
 }
 
 .response {
-  height: 40vh;
+  height: 50vh;
   width: 32.5vw;
-  border-top-right-radius: 12.5vh;
+  border-top-right-radius: 5vh;
+  border-bottom-right-radius: 5vh;
   background-color: #cfcfcf;
   border-left: 1.5px solid #3f3f3f;
-  max-height: 40vh;
-  overflow-y: scroll;
 }
 
 .currency-input {
@@ -208,10 +174,10 @@ export default {
 }
 
 .response-info {
-  columns: 2;
   list-style: none;
   font-size: 1rem;
   line-height: 150%;
+  max-width: 32.5;
 }
 
 .ISO-list {
@@ -225,7 +191,7 @@ export default {
 
 .iso-container {
   width: 25vw;
-  margin: 10vh;
+  margin: 5vh;
   display: flex;
   flex-direction: column;
   align-content: center;
@@ -235,10 +201,27 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
-  width: 40vw;
+  font-size: 1rem;
+  width: 45vw;
   height: 5vh;
   background-color: #d45434;
   filter: brightness(110%);
+  border-radius: 2vh;
+  font-family: "Open Sans";
+  font: 500;
+}
+
+.request-submit {
+  border: none;
+  background-color: #afafaf;
+  font-size: 1rem;
+  height: 1.75rem;
+  width: 7.5vw;
+  border-radius: 0.75rem;
+}
+
+.request-submit:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 3px 5px #3f3f3f;
 }
 </style>
