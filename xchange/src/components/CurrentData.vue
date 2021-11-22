@@ -326,4 +326,15 @@ export default {
 .header:focus {
   outline: none;
 }
+
+input{
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 0;
+  box-shadow: 0 0 1.5rem 0.4rem rgba(0, 0, 0, 0.06);
+  border-radius: 1rem;
+  width: 100%;
+  transform: translateY(100%);
+
+}
 </style>
