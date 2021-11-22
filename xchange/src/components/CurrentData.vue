@@ -5,14 +5,14 @@
 
         <div class="currency-selector">
           <div class="selection-box">
-           <div class="ul">
+           <div v-show="show" class="ul">
              <li class="name" v-for="(name, index) in names" :key="name" @click="getIndex(index)" >{{ name }}</li>
           </div>
            <h1 v-if="test === true" class="selector"  @click="active">Select Currency</h1>
-            <h2 v-else class="selector"  >{{ selectedName }}</h2>
+            <h1 v-else class="selector"  @click="remove">{{ selectedName }}</h1>
          </div>
         </div>
-         <input type="text" class="header" placeholder="Enter Amount" v-model="amount" @keyup="calcOutput" />
+         <input type="number" class="header" placeholder="Enter Amount" v-model="amount" @keyup="calcOutput" />
 
       </section>
       <section class="currency-returned">
@@ -21,11 +21,11 @@
             <div class="ul2">
             <li class="name" v-for="(name, index2) in names" :key="name" @click="getIndex2(index2)">{{ name }}</li>
            </div>
-           <h1 v-if="test2 === true" class="selector"  @click="active2">Select Currency</h1>
-            <h2 v-else class="selector"  >{{ selectedName }}</h2>
+           <h1 v-if="test2" class="selector" >Select Currency</h1>
+            <h1 v-else class="selector"  >{{ selectedName2 }}</h1>
          </div>
         </div>
-    <input type="text" class="header" placeholder="Enter Amount" @keyup="calcInput" v-model="output"/>
+    <input type="number" class="header" placeholder="Enter Amount" @keyup="calcInput" v-model="output"/>
       </section>
 
       
@@ -50,7 +50,8 @@ export default {
       amount:null,
       output:null,
       test: true,
-      test2:true
+      test2:true,
+      show:false
     };
   },
   created() {
@@ -84,35 +85,39 @@ export default {
       this.selectedIndex2 = index2
      this.selectedName2 = this.names[index2]
       console.log(this.selectedName)
-      this.test =  false
+      this.test2 =  false
     },
     getAmount(){
        let amount = this.amount
        console.log(this.result[this.selectedName])
        console.log(amount)
-       this.test2 = false
+
   },
   calcOutput(){
-      this.output = ((this.amount/this.result[this.selectedIndex])*this.result[this.selectedName2]).toFixed(3)
+      this.output = ((this.amount/this.result[this.selectedIndex])*this.result[this.selectedIndex2]).toFixed(3)
       console.log(this.output)
     },
     calcInput(){
-      this.amount = ((this.output/this.result[this.selectedIndex2])*this.result[this.selectedName]).toFixed(3)
+      this.amount = ((this.output/this.result[this.selectedIndex2])*this.result[this.selectedIndex]).toFixed(3)
+      console.log(this.amount)
     },
     reset(){
     this.amount = null
     this.output = null
     },
     active(){
-      const ul = document.querySelector(".ul")
-      ul.classList.toggle("active")
+      // const ul = document.querySelector(".ul")
+      // ul.classList.toggle("active")
+      this.show = true
     },
-      active2(){
-      const ul2 = document.querySelector(".ul2")
-      ul2.classList.toggle("active")
-    },
+    //   active2(){
+    //   const ul2 = document.querySelector(".ul2")
+    //   ul2.classList.toggle("active")
+    // },
 
-  
+  remove(){
+     this.show = false
+  }
   },
 
   
@@ -187,12 +192,12 @@ export default {
   flex-direction: column;
   background: #2f3640;
   color: white;
-  max-height: 0;
+  max-height: 10rem;
   width: 100%;
-  opacity: 0;
+  /* opacity: 0; */
   transition: all 0.4s;
-  border-radius: 8px;
-  overflow: hidden;
+  border-radius: 0.8rem;
+  overflow: scroll;
   list-style: none;
 
   order: 1;
@@ -203,21 +208,21 @@ export default {
   flex-direction: column;
   background: #2f3640;
   color: white;
-  max-height: 0;
+  max-height: 10rem;
   width: 100%;
-  opacity: 0;
+  /* opacity: 0; */
   transition: all 0.4s;
-  border-radius: 8px;
-  overflow: hidden;
+  border-radius: 0.8rem;
+  overflow: scroll;
   list-style: none;
 
   order: 1;
 }
-.selection-box .ul.active{
+/* .selection-box .ul.active{
   max-height: 10rem;
   overflow-y: scroll;
   opacity: 1;
-}
+} */
 
 .selection-box2 .ul2.active{
   max-height: 10rem;
