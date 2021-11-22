@@ -8,7 +8,8 @@
            <div class="ul">
              <li class="name" v-for="(name, index) in names" :key="name" @click="getIndex(index)" >{{ name }}</li>
           </div>
-           <h1 class="selector"  @click="active">Select Currency</h1>
+           <h1 v-if="test === true" class="selector"  @click="active">Select Currency</h1>
+            <h2 v-else class="selector"  >{{ selectedName }}</h2>
          </div>
         </div>
          <input type="text" class="header" placeholder="Enter Amount" v-model="amount" @keyup="calcOutput" />
@@ -20,7 +21,8 @@
             <div class="ul2">
             <li class="name" v-for="(name, index2) in names" :key="name" @click="getIndex2(index2)">{{ name }}</li>
            </div>
-            <h1 class="selector2" @click="active2">Select Currency</h1>
+           <h1 v-if="test2 === true" class="selector"  @click="active2">Select Currency</h1>
+            <h2 v-else class="selector"  >{{ selectedName }}</h2>
          </div>
         </div>
     <input type="text" class="header" placeholder="Enter Amount" @keyup="calcInput" v-model="output"/>
@@ -41,11 +43,14 @@ export default {
     return {
       result: [],
       names:[],
-      selectedName:0,
-      selectedName2:0,
+      selectedName: null,
+      selectedName2:null,
+      selectedIndex:0,
+      selectedIndex2:0,
       amount:null,
-      output:null
-    
+      output:null,
+      test: true,
+      test2:true
     };
   },
   created() {
@@ -69,29 +74,30 @@ export default {
         console.log(error);
       }
     },
-    getIndex(index, e){
-      this.selectedName = index
-      const selector = document.querySelector(".selector")
-      const allNames = document.querySelectorAll(".name")
-       selector.innerHTML = e.innerHTML 
-      allNames.classList.remove("active")
+    getIndex(index){
+      this.selectedIndex = index
+      this.selectedName = this.names[index]
+      console.log(this.selectedName)
+      this.test =  false
     },
     getIndex2(index2){
-      this.selectedName2 = index2
-      console.log(index2, this.selectedName)
-      console.log(this.result[this.selectedName])
+      this.selectedIndex2 = index2
+     this.selectedName2 = this.names[index2]
+      console.log(this.selectedName)
+      this.test =  false
     },
     getAmount(){
        let amount = this.amount
        console.log(this.result[this.selectedName])
        console.log(amount)
+       this.test2 = false
   },
   calcOutput(){
-      this.output = ((this.amount/this.result[this.selectedName])*this.result[this.selectedName2]).toFixed(3)
+      this.output = ((this.amount/this.result[this.selectedIndex])*this.result[this.selectedName2]).toFixed(3)
       console.log(this.output)
     },
     calcInput(){
-      this.amount = ((this.output/this.result[this.selectedName2])*this.result[this.selectedName]).toFixed(3)
+      this.amount = ((this.output/this.result[this.selectedIndex2])*this.result[this.selectedName]).toFixed(3)
     },
     reset(){
     this.amount = null
@@ -105,12 +111,7 @@ export default {
       const ul2 = document.querySelector(".ul2")
       ul2.classList.toggle("active")
     },
-    rename(e){
-      const selector = document.querySelector(".selector")
-      const allNames = document.querySelectorAll(".name")
-      selector.innerHTML = e.innerHTML 
-      allNames.classList.remove("active")
-    }
+
   
   },
 
