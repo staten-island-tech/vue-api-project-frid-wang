@@ -1,8 +1,6 @@
 <template>
   <div class="about">
-    <HistoricalData
-      warning="Historical Data only applies to dates after January 1st, 2000"
-    />
+    <HistoricalData />
   </div>
 </template>
 
@@ -13,10 +11,5 @@ export default {
   components: {
     HistoricalData,
   },
-  // data() {
-  //   return {
-  //     warning: "Historical Data only applies to dates after January 1st, 2000",
-  //   };
-  // },
 };
 </script>

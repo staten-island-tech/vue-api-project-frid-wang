@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <div class="date-warn">
-      <p>{{ $attrs.warning }}</p>
+      <p>Historical Data only applies to dates after January 1st, 2000</p>
     </div>
     <div class="exchange">
       <section class="request" v-bind:style="requestStyle">
