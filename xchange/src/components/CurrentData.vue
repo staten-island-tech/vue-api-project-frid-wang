@@ -5,7 +5,7 @@
 
         <div class="currency-selector">
           <div class="selection-box">
-           <div v-show="show" class="ul">
+           <div class="ul">
              <li class="name" v-for="(name, index) in names" :key="name" @click="getIndex(index)" >{{ name }}</li>
           </div>
            <h1 v-if="test === true" class="selector"  @click="active">Select Currency</h1>
@@ -30,7 +30,6 @@
 
       
     </main>
-    <h1>All Outputs are rounded to 3 decimals!</h1>
     <main class="reset">
       <button class="reset-button" @click="reset">Reset</button>
     </main>
@@ -51,7 +50,6 @@ export default {
       output:null,
       test: true,
       test2:true,
-      show:false
     };
   },
   created() {
@@ -197,7 +195,7 @@ export default {
   /* opacity: 0; */
   transition: all 0.4s;
   border-radius: 0.8rem;
-  overflow: scroll;
+  overflow-y: scroll;
   list-style: none;
 
   order: 1;
@@ -213,7 +211,7 @@ export default {
   /* opacity: 0; */
   transition: all 0.4s;
   border-radius: 0.8rem;
-  overflow: scroll;
+  overflow-y: scroll;
   list-style: none;
 
   order: 1;
@@ -310,8 +308,12 @@ export default {
   border: none;
   font-size: 1.25rem;
   cursor: pointer;
+  /* transition: all 1s ease; */
 }
 
+.reset-button:hover{
+  transform: scale(1.1);
+}
 .output {
   height: 3rem;
   border: solid;
@@ -333,7 +335,7 @@ input{
   border: 0;
   box-shadow: 0 0 1.5rem 0.4rem rgba(0, 0, 0, 0.06);
   border-radius: 1rem;
-  width: 100%;
+  width: 90%;
   transform: translateY(100%);
 
 }
